@@ -1,3 +1,5 @@
+;; TODO: Write a wrap function that counts based on html content and excludes
+;; html tags. Maybe also renders the html?
 (ns logan-cam.core
   (:require [hiccup.core :as c]
             [hiccup.page :as p]
@@ -66,11 +68,29 @@
        (left-and-right "STD: 33" "July 1992")
        (title "THE TFTP PROTOCOL (REVISION 2)")
        (heading "Status of this Memo")
-       (paragraph "This RFC specifies an IAB standards track protocol for the
-       Internet community, and requests discussion and suggestions for
-       improvements. Please refer to the current edition of the \"IAB Official
-       Protocol Standards\" for the standardization state and status of this
-       protocol. Distribution of this memo is unlimited.")]]))))
+       (paragraph
+        "This RFC specifies an IAB standards track protocol for the Internet
+       community, and requests discussion and suggestions for improvements.
+       Please refer to the current edition of the \"IAB Official Protocol
+       Standards\" for the standardization state and status of this protocol.
+       Distribution of this memo is unlimited.")
+       (heading "Summary")
+       (paragraph
+        "TFTP is a very simple protocol used to transfer files. It is from this
+        that its name comes, Trivial File Transfer Protocol or TFTP. Each
+        nonterminal packet is acknowledged separately. This document describes
+        the protocol and its types of packets. The document also explains the
+        reasons behind some of the design decisions.")
+       (heading "Acknowlegements")
+       (paragraph
+        "The protocol was originally designed by Noel Chiappa, and was
+        redesigned by him, Bob Baldwin and Dave Clark, with comments from Steve
+        Szymanski. The current revision of the document includes modifications
+        stemming from discussions with and suggestions from Larry Allen, Noel
+        Chiappa, Dave Clark, Geoff Cooper, Mike Greenwald, Liza Martin, David
+        Reed, Craig Milo Rogers (of USC-ISI), Kathy Yellick, and the author. The
+        acknowledgement and retransmission scheme was inspired by TCP, and the
+        error mechanism was suggested by PARC's EFTP abort message.")]]))))
 
 ;; Output
 
