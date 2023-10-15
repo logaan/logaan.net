@@ -1,9 +1,11 @@
-;; TODO: Write a wrap function that counts based on html content and excludes
-;; html tags. Maybe also renders the html?
+;; TODO: Get all of the content from my resume into this guy. It's small enough
+;; that it doesn't need a table of contents. And I can just do the division into
+;; pages by hand.
 (ns logan-cam.core
   (:require [hiccup.core :as c]
             [hiccup.page :as p]
-            clojure.pprint))
+            clojure.pprint
+            [clojure.string :as str]))
 
 ;; Content constants
 (def self-url  "https://logan.cam/")
@@ -11,7 +13,7 @@
 
 ;; Format constants
 
-(def max-width 71)
+(def max-width 72)
 (def left-margin 3)
 (def p-content-width 69)
 (def lines-per-page 55)
@@ -47,7 +49,11 @@
    [:span {:class "h1"} (center text max-width)]
    "\n\n"))
 
-(defn heading [text]
+(defn h1 [text]
+  [:span {:class "h2"}
+   (str text "\n\n")])
+
+(defn h2 [text]
   (str text "\n\n"))
 
 (defn paragraph [text]
@@ -72,7 +78,8 @@
     "|" [:a {:href  "https://flickr.com/photos/colinlogan"} "Flickr"]
     "] "
 
-    (spaces 21)]
+    ;; TODO: Should grow with max width
+    (spaces 22)]
 
    [:br]
    [:span {:class "pre docinfo"}
@@ -80,7 +87,8 @@
 
    [:br]
    [:span {:class "pre docinfo"}
-    (spaces 55)
+    ;; TODO: Should grow with max width
+    (spaces 56)
     "PERSONAL WEBSITE"]))
 
 (def abstract-and-status
@@ -131,6 +139,113 @@
       (spaces right-spacing)
       month-and-year])))
 
+(def skills
+  (list
+   (h1 "1. Skills")
+
+   (h1 "1.1. Languages")
+   (paragraph
+    "Clojure, ClojureScript, Javascript, Ruby, Python, Java, Golang, Erlang,
+    Haskell, Scala, Rust, Groovy, Lua, Cold Fusion, PHP, ASP Classic")
+
+   (h1 "1.2. Tools")
+   (paragraph
+    "Liberator, Reagent, React, Angular, Rails, Spring, Dropwizard, Netty,
+    Prototype, YUI, Nitrogen, Alfresco Surf")
+
+   (h1 "1.2. Frameworks")
+   (paragraph
+    "Kubernetes, Kafka, Docker, AWS, Heroku, Postgres, Cassandra, Datomic,
+    RabbitMQ")
+
+   (h1 "1.2. Practices")
+   (paragraph
+    "Scrum, Kanban, Lean, SAFe, TDD, Pair Programming, CI, CD")))
+
+(defn lines [& items]
+  (-> (mapcat (fn [line]
+                [(spaces left-margin)
+                 line
+                 "\n"])
+            items)
+      (concat ["\n"])))
+
+(defn bullets [& items]
+  (-> (mapcat (fn [line]
+                [" o "
+                 line
+                 "\n"])
+              items)
+      (concat ["\n"])))
+
+;; TODO: Do something like `lines` but for lists that will insert the bullets
+;; and wrap with the correct indentation.
+
+(def experience
+  (list
+   (h1 "2. Experience")
+
+   (h1 "2.1. Zendesk")
+
+   (paragraph "Melbourne, Vic.")
+
+   (lines
+    "Senior Software Engineer.......................August 2017 - May 2019"
+    "Technical Lead for Apps.......................October 2018 - May 2021"
+    "Staff Software Engineer........................ May 2019 - March 2022"
+    "Group Technical Lead....................... May 2021 - September 2023"
+    "Senior Staff Software Engineer........... March 2022 - September 2023")
+
+   (bullets
+    "Evaluation of API Gateways and tender process"
+    "Lead the design of tools, standards, and strategory for REST API
+   versioning across all of Zendesk (Ruby, Golang, REST)"
+    "Design of a request rate monitor and limiter (AWS)"
+    "Design and prototypes of a distributed transaction manager (SQS,
+   Ruby, Java)"
+    "Development of App market (Ruby, Javascript, MySql)")
+
+   "\n\n\n"
+
+   [:span {:class "grey"} (left-and-right "Campbell" "[Page 1]")]
+   [:hr]
+   [:pre {:class "newpage"}
+    (page-header self-url "PW 1337" "Website of Logan Campbell")]
+
+   "\n\n"
+
+   (h1 "2.2. Silverpond")
+   (paragraph "Melbourne, Vic.")
+
+   (lines
+    "Software Engineer............................November 2012 - June 2017")
+
+   (bullets
+    "Physical fault detection model from smart meter readings, API and UI
+   for fault analysis and remedy tracking, Power network simulation, and
+   Data processing pipeline for Powercor (Python, Clojure, ClojureScript,
+   React)"
+    "Training, architecture proposals, and prototyping for Aus Post
+   (Clojure)"
+    "Record management interface embedded in a medical device for
+   Bluechiip (JS)"
+    "Franchisee relationship management UI for 7-Eleven (Clojurescript,
+   React)")
+
+   (paragraph "")
+
+   (h1 "2.3. Thoughtworks")
+   (paragraph "")
+
+   (h1 "2.4. Hard Hat Digital")
+   (paragraph "")
+
+   (h1 "2.5. Curtin University of Technology")
+   (paragraph "")
+
+   (h1 "2.6. Webfirm")
+   (paragraph "")))
+
 ;; TODO: Make is so that each of these formatting functions return an object
 ;; that tracks how many lines long they are when rendered as text (ignoring html
 ;; tags). Might even need a protocol that lets them split themselves across a
@@ -151,65 +266,66 @@
    (left-and-right "Request For Comments: 0" "Curtin and Monash")
    (left-and-right "STD: 42" month-and-year)
    (title "PERSONAL WEBSITE OF LOGAN CAMPBELL (REVISION 2)")
-   (heading "Status of this Memo")
-   (paragraph
-    "This RFC specifies an IAB standards track protocol for the Internet
-       community, and requests discussion and suggestions for improvements.
-       Please refer to the current edition of the \"IAB Official Protocol
-       Standards\" for the standardization state and status of this protocol.
-       Distribution of this memo is unlimited.")
-   (heading "Summary")
-   (paragraph
-    "TFTP is a very simple protocol used to transfer files. It is from this
-        that its name comes, Trivial File Transfer Protocol or TFTP. Each
-        nonterminal packet is acknowledged separately. This document describes
-        the protocol and its types of packets. The document also explains the
-        reasons behind some of the design decisions.")
-   (heading "Acknowlegements")
-   (paragraph
-    "The protocol was originally designed by Noel Chiappa, and was
-        redesigned by him, Bob Baldwin and Dave Clark, with comments from Steve
-        Szymanski. The current revision of the document includes modifications
-        stemming from discussions with and suggestions from Larry Allen, Noel
-        Chiappa, Dave Clark, Geoff Cooper, Mike Greenwald, Liza Martin, David
-        Reed, Craig Milo Rogers (of USC-ISI), Kathy Yellick, and the author. The
-        acknowledgement and retransmission scheme was inspired by TCP, and the
-        error mechanism was suggested by PARC's EFTP abort message.")
 
-   "1
-    2
-    3
-    4
-    5
-    6
-    7
-    8
-    9
-    0
-    1
-    2
-    3
-    4
-    5
-    6
-    7
-    8
-    9
-    0
-"
+   skills
+   experience
 
-   "
+;;   (h2 "Status of this Memo")
+;;   (paragraph
+;;    "This RFC specifies an IAB standards track protocol for the Internet
+;;       community, and requests discussion and suggestions for improvements.
+;;       Please refer to the current edition of the \"IAB Official Protocol
+;;       Standards\" for the standardization state and status of this protocol.
+;;       Distribution of this memo is unlimited.")
+;;   (h2 "Summary")
+;;   (paragraph
+;;    "TFTP is a very simple protocol used to transfer files. It is from this
+;;        that its name comes, Trivial File Transfer Protocol or TFTP. Each
+;;        nonterminal packet is acknowledged separately. This document describes
+;;        the protocol and its types of packets. The document also explains the
+;;        reasons behind some of the design decisions.")
+;;   (h2 "Acknowlegements")
+;;   (paragraph
+;;    "The protocol was originally designed by Noel Chiappa, and was
+;;        redesigned by him, Bob Baldwin and Dave Clark, with comments from Steve
+;;        Szymanski. The current revision of the document includes modifications
+;;        stemming from discussions with and suggestions from Larry Allen, Noel
+;;        Chiappa, Dave Clark, Geoff Cooper, Mike Greenwald, Liza Martin, David
+;;        Reed, Craig Milo Rogers (of USC-ISI), Kathy Yellick, and the author. The
+;;        acknowledgement and retransmission scheme was inspired by TCP, and the
+;;        error mechanism was suggested by PARC's EFTP abort message.")
+;;
+;;   "1
+;;    2
+;;    3
+;;    4
+;;    5
+;;    6
+;;    7
+;;    8
+;;    9
+;;    0
+;;    1
+;;    2
+;;    3
+;;    4
+;;    5
+;;    6
+;;    7
+;;    8
+;;    9
+;;    0
+;;"
+;;
+;;   "
+;;
+;;
+;;"
+;;
+;;
+;;   ]
 
-
-"
-
-
-   [:span {:class "grey"} (left-and-right "Campbell" "[Page 1]")]
-   [:hr]
-   [:pre {:class "newpage"}
-    (page-header self-url "RFC 1350" "TFTP Revision 2")]
-
-   ])
+  ])
 
 (def pages
   (c/html
