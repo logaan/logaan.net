@@ -341,13 +341,13 @@
    (lines
     "Monash University, Victoria."
     "Faculty of Information Technology."
-    "Master of Computer Science. 2022-Present.")
+    "Master of Computer Science. 2022 - Present.")
 
    (lines
     "Curtin University of Technology, Western Australia."
     "School of Science, Mathematics and"
     "Engineering. Department of Computing."
-    "BsC Computer Science. 2005-2007. Did not complete.")
+    "BsC Computer Science. 2005 - 2007. Did not complete.")
 
    (end-of-page 3)))
 
