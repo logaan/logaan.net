@@ -72,7 +72,7 @@
     "|" [:a {:href  "https://flickr.com/photos/colinlogan"} "Flickr"]
     "] "
 
-    (spaces 35)]
+    (spaces 21)]
 
    [:br]
    [:span {:class "pre docinfo"}
@@ -176,6 +176,32 @@
         acknowledgement and retransmission scheme was inspired by TCP, and the
         error mechanism was suggested by PARC's EFTP abort message.")
 
+   "1
+    2
+    3
+    4
+    5
+    6
+    7
+    8
+    9
+    0
+    1
+    2
+    3
+    4
+    5
+    6
+    7
+    8
+    9
+    0
+"
+
+   "
+
+
+"
 
 
    [:span {:class "grey"} (left-and-right "Campbell" "[Page 1]")]
@@ -206,9 +232,14 @@
 (spit "docs/output.html" pages)
 
 ;;;
-;; 2 blank lines between heading span and start of content
+;; 1 line of header
+;; 2 blank lines between header span and start of content
 ;; 48 lines of content
 ;; 3 blank lines before footer
+;; 1 line of footer
+;;
+;; ~ 56 lines total between each page HR
+;;
 ;;;
 ;; <span class="grey"><a href="./rfc1350">RFC 1350</a>                    TFTP Revision 2                    July 1992</span>
 ;; 
