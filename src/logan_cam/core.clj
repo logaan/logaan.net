@@ -181,17 +181,25 @@
 ;; TODO: Do something like `lines` but for lists that will insert the bullets
 ;; and wrap with the correct indentation.
 
-(defn page-break [page-number]
+(defn end-of-page [page-number]
   (list
    "\n\n\n"
 
    [:span {:class "grey"} (left-and-right "Campbell"
                                           (str "[Page " page-number "]"))]
-   [:hr]
+   [:hr]))
+
+(def new-page
+  (list
    [:pre {:class "newpage"}
     (page-header self-url "PW 1337" "Website of Logan Campbell")]
 
    "\n\n"))
+
+(defn page-break [page-number]
+  (list
+   (end-of-page page-number)
+   new-page))
 
 (def experience
   (list
@@ -296,6 +304,53 @@
     "Introduced SVN and then Git, trained staff and set up servers"
     "Rapidly implemented client sites on tight budgets and deadlines")))
 
+(def talks
+  (list
+   (h1 "3. Talks")
+
+   (h2 "EuroClojure 2014")
+   (paragraph "Clojure at a Post Office")
+
+   (h2 "Melbourne FP User Group")
+   (paragraph
+    "Intro to Erlang, A Monad is not a Burrito, Clojure Workshop, Promise
+   Streams, OO values in FP languages, Clojure at a Post Office, Intro to
+   Elixir, Full Stack development with FP (Panel)")
+
+   (h2 "Melbourne Clojure User Group")
+   (paragraph
+    "Intro to Datomic, Promise Streams, Async IO Coordination, Nonaga, Squid")
+
+   (h2 "Australia Post Digital Mailbox")
+   (paragraph
+    "Async IO Coordination, Clojure Workshop, CQRS with Cassandra")
+
+   (h2 "ThoughtWorks Internal Conferences")
+   (paragraph
+    "Why Functional Programming matters, Introduction to Erlang")
+
+   (h2 "Webjam9 2008")
+   (paragraph
+    "Automated CMS back end website generation")))
+
+(def education
+  (list
+
+   (h1 "4. Education")
+
+   (lines
+    "Monash University, Victoria."
+    "Faculty of Information Technology."
+    "Master of Computer Science. 2022-Present.")
+
+   (lines
+    "Curtin University of Technology, Western Australia."
+    "School of Science, Mathematics and"
+    "Engineering. Department of Computing."
+    "BsC Computer Science. 2005-2007. Did not complete.")
+
+   (end-of-page 3)))
+
 ;; TODO: Make is so that each of these formatting functions return an object
 ;; that tracks how many lines long they are when rendered as text (ignoring html
 ;; tags). Might even need a protocol that lets them split themselves across a
@@ -318,7 +373,9 @@
    (title "PERSONAL WEBSITE OF LOGAN CAMPBELL (REVISION 2)")
 
    skills
-   experience])
+   experience
+   talks
+   education])
 
 (def pages
   (c/html
