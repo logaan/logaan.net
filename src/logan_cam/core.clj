@@ -181,20 +181,32 @@
 ;; TODO: Do something like `lines` but for lists that will insert the bullets
 ;; and wrap with the correct indentation.
 
+(defn page-break [page-number]
+  (list
+   "\n\n\n"
+
+   [:span {:class "grey"} (left-and-right "Campbell"
+                                          (str "[Page " page-number "]"))]
+   [:hr]
+   [:pre {:class "newpage"}
+    (page-header self-url "PW 1337" "Website of Logan Campbell")]
+
+   "\n\n"))
+
 (def experience
   (list
    (h1 "2. Experience")
 
    (h1 "2.1. Zendesk")
 
-   (paragraph "Melbourne, Vic.")
+   (paragraph "Melbourne, Victoria.")
 
    (lines
-    "Senior Software Engineer.......................August 2017 - May 2019"
-    "Technical Lead for Apps.......................October 2018 - May 2021"
-    "Staff Software Engineer........................ May 2019 - March 2022"
-    "Group Technical Lead....................... May 2021 - September 2023"
-    "Senior Staff Software Engineer........... March 2022 - September 2023")
+    "Senior Software Engineer ..................... August 2017 - May 2019"
+    "Technical Lead for Apps ..................... October 2018 - May 2021"
+    "Staff Software Engineer ....................... May 2019 - March 2022"
+    "Group Technical Lead ...................... May 2021 - September 2023"
+    "Senior Staff Software Engineer .......... March 2022 - September 2023")
 
    (bullets
     "Evaluation of API Gateways and tender process"
@@ -205,20 +217,13 @@
    Ruby, Java)"
     "Development of App market (Ruby, Javascript, MySql)")
 
-   "\n\n\n"
-
-   [:span {:class "grey"} (left-and-right "Campbell" "[Page 1]")]
-   [:hr]
-   [:pre {:class "newpage"}
-    (page-header self-url "PW 1337" "Website of Logan Campbell")]
-
-   "\n\n"
+   (page-break 1)
 
    (h1 "2.2. Silverpond")
-   (paragraph "Melbourne, Vic.")
+   (paragraph "Melbourne, Victoria.")
 
    (lines
-    "Software Engineer............................November 2012 - June 2017")
+    "Software Engineer ....................... November 2012 - August 2017")
 
    (bullets
     "Physical fault detection model from smart meter readings, API and UI
@@ -232,19 +237,64 @@
     "Franchisee relationship management UI for 7-Eleven (Clojurescript,
    React)")
 
-   (paragraph "")
-
    (h1 "2.3. Thoughtworks")
-   (paragraph "")
+   (paragraph "Melbourne, Victoria.")
+
+   (lines
+    "Consultant Developer ...................... July 2011 - November 2012")
+
+   (bullets
+    "Three real time financial web services for IOOF (Java)"
+    "Payment consolidation service for NBN (Java)"
+    "Charity campaign platform for Live Below The Line (Rails)"
+    "Domain registry, and performance test suite for Aus Registry (Java,
+   Scala)"
+    "Rapidly developed MVP for My Red Alert (Rails)"
+    "US political candidate information site for New Organising Institute
+   (Rails)"
+    "Automated content deployment network for Hitnet (Bash)")
 
    (h1 "2.4. Hard Hat Digital")
-   (paragraph "")
+   (paragraph "South Yarra, Victoria.")
+
+   (lines
+    "Senior Programmer .............................. June 2010 - May 2011")
+
+   (bullets
+    "Implementing HHD's CMS on client websites (Rails)"
+    "Publishing open source projects (Rails, Clojure)"
+    "Extending HHD's CMS (Rails)"
+    "Building custom web applications (Rails)"
+    "Maintaining legacy websites (PHP)")
 
    (h1 "2.5. Curtin University of Technology")
-   (paragraph "")
+
+   (paragraph "Bentley, Western Australia.")
+
+   (lines
+    "Web Programmer ............................. July 2009 - January 2010")
+
+   (bullets
+    "Developing an Enterprise Document Management System (JS, Alfresco)")
+
+   (page-break 2)
 
    (h1 "2.6. Webfirm")
-   (paragraph "")))
+
+   (paragraph "East Perth, Western Australia..")
+
+   (lines
+    "Programmer .............................. September 2007 to July 2008"
+    "Senior Programmer ............................ July 2008 to July 2009")
+
+   (bullets
+    "Developed software that automated most of the process of adding our
+   content management system to client sites"
+    "Developed an automated deployment tool for all internal Rails sites"
+    "Introduced Rails, trained staff and implemented a new CMS to use
+   with Rails"
+    "Introduced SVN and then Git, trained staff and set up servers"
+    "Rapidly implemented client sites on tight budgets and deadlines")))
 
 ;; TODO: Make is so that each of these formatting functions return an object
 ;; that tracks how many lines long they are when rendered as text (ignoring html
@@ -268,64 +318,7 @@
    (title "PERSONAL WEBSITE OF LOGAN CAMPBELL (REVISION 2)")
 
    skills
-   experience
-
-;;   (h2 "Status of this Memo")
-;;   (paragraph
-;;    "This RFC specifies an IAB standards track protocol for the Internet
-;;       community, and requests discussion and suggestions for improvements.
-;;       Please refer to the current edition of the \"IAB Official Protocol
-;;       Standards\" for the standardization state and status of this protocol.
-;;       Distribution of this memo is unlimited.")
-;;   (h2 "Summary")
-;;   (paragraph
-;;    "TFTP is a very simple protocol used to transfer files. It is from this
-;;        that its name comes, Trivial File Transfer Protocol or TFTP. Each
-;;        nonterminal packet is acknowledged separately. This document describes
-;;        the protocol and its types of packets. The document also explains the
-;;        reasons behind some of the design decisions.")
-;;   (h2 "Acknowlegements")
-;;   (paragraph
-;;    "The protocol was originally designed by Noel Chiappa, and was
-;;        redesigned by him, Bob Baldwin and Dave Clark, with comments from Steve
-;;        Szymanski. The current revision of the document includes modifications
-;;        stemming from discussions with and suggestions from Larry Allen, Noel
-;;        Chiappa, Dave Clark, Geoff Cooper, Mike Greenwald, Liza Martin, David
-;;        Reed, Craig Milo Rogers (of USC-ISI), Kathy Yellick, and the author. The
-;;        acknowledgement and retransmission scheme was inspired by TCP, and the
-;;        error mechanism was suggested by PARC's EFTP abort message.")
-;;
-;;   "1
-;;    2
-;;    3
-;;    4
-;;    5
-;;    6
-;;    7
-;;    8
-;;    9
-;;    0
-;;    1
-;;    2
-;;    3
-;;    4
-;;    5
-;;    6
-;;    7
-;;    8
-;;    9
-;;    0
-;;"
-;;
-;;   "
-;;
-;;
-;;"
-;;
-;;
-;;   ]
-
-  ])
+   experience])
 
 (def pages
   (c/html
@@ -355,61 +348,4 @@
 ;; 1 line of footer
 ;;
 ;; ~ 56 lines total between each page HR
-;;
-;;;
-;; <span class="grey"><a href="./rfc1350">RFC 1350</a>                    TFTP Revision 2                    July 1992</span>
-;; 
-;; 
-;;    so it may be used to move files between machines on different
-;;    networks implementing UDP.  (This should not exclude the possibility
-;;    of implementing TFTP on top of other datagram protocols.)  It is
-;;    designed to be small and easy to implement.  Therefore, it lacks most
-;;    of the features of a regular FTP.  The only thing it can do is read
-;;    and write files (or mail) from/to a remote server.  It cannot list
-;;    directories, and currently has no provisions for user authentication.
-;;    In common with other Internet protocols, it passes 8 bit bytes of
-;;    data.
-;; 
-;;    Three modes of transfer are currently supported: netascii (This is
-;;    ascii as defined in "USA Standard Code for Information Interchange"
-;;    [<a href="#ref-1">1</a>] with the modifications specified in "Telnet Protocol
-;;    Specification" [<a href="#ref-3" title="&quot;Telnet Protocol Specification,&quot;">3</a>].)  Note that it is 8 bit ascii.  The term
-;;    "netascii" will be used throughout this document to mean this
-;;    particular version of ascii.); octet (This replaces the "binary" mode
-;;    of previous versions of this document.) raw 8 bit bytes; mail,
-;;    netascii characters sent to a user rather than a file.  (The mail
-;;    mode is obsolete and should not be implemented or used.)  Additional
-;;    modes can be defined by pairs of cooperating hosts.
-;; 
-;;    Reference [<a href="#ref-4" title="&quot;Requirements for Internet Hosts -- Application and Support&quot;">4</a>] (<a href="#section-4.2">section 4.2</a>) should be consulted for further valuable
-;;    directives and suggestions on TFTP.
-;; 
-;; <span class="h2"><a class="selflink" id="section-2" href="#section-2">2</a>. Overview of the Protocol</span>
-;; 
-;;    Any transfer begins with a request to read or write a file, which
-;;    also serves to request a connection.  If the server grants the
-;;    request, the connection is opened and the file is sent in fixed
-;;    length blocks of 512 bytes.  Each data packet contains one block of
-;;    data, and must be acknowledged by an acknowledgment packet before the
-;;    next packet can be sent.  A data packet of less than 512 bytes
-;;    signals termination of a transfer.  If a packet gets lost in the
-;;    network, the intended recipient will timeout and may retransmit his
-;;    last packet (which may be data or an acknowledgment), thus causing
-;;    the sender of the lost packet to retransmit that lost packet.  The
-;;    sender has to keep just one packet on hand for retransmission, since
-;;    the lock step acknowledgment guarantees that all older packets have
-;;    been received.  Notice that both machines involved in a transfer are
-;;    considered senders and receivers.  One sends data and receives
-;;    acknowledgments, the other sends acknowledgments and receives data.
-;; 
-;;    Most errors cause termination of the connection.  An error is
-;;    signalled by sending an error packet.  This packet is not
-;;    acknowledged, and not retransmitted (i.e., a TFTP server or user may
-;;    terminate after sending an error message), so the other end of the
-;;    connection may not get it.  Therefore timeouts are used to detect
-;;    such a termination when the error packet has been lost.  Errors are
-;; 
-;; 
-;; 
-;; <span class="grey">Sollins                                                         [Page 2]</span></pre>
 ;;;
