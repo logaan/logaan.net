@@ -5,7 +5,11 @@
             [hiccup.page :as p]
             clojure.pprint))
 
-;; Constants
+;; Content constants
+(def self-url  "https://logan.cam/")
+(def month-and-year "October 2023")
+
+;; Format constants
 
 (def max-width 71)
 (def left-margin 3)
@@ -51,7 +55,141 @@
 
 ;; Actual page contents
 
-(defn foo []
+(def header
+  (list
+   [:span {:class "pre docinfo"}
+    "[" [:a {:href self-url} "Home"]
+    "] "
+
+    "[" [:a {:href  "https://logaan.github.io/"} "Blog"]
+    "|" [:a {:href  "https://twitter.com/logaan"} "Twitter"]
+    "] "
+
+    "[" [:a {:href  "https://github.com/logaan"} "Github"]
+    "] "
+
+    "[" [:a {:href  "https://www.instagram.com/logancampbell/"} "Instagram"]
+    "|" [:a {:href  "https://flickr.com/photos/colinlogan"} "Flickr"]
+    "] "
+
+    (spaces 35)]
+
+   [:br]
+   [:span {:class "pre docinfo"}
+    (spaces max-width)]
+
+   [:br]
+   [:span {:class "pre docinfo"}
+    (spaces 55)
+    "PERSONAL WEBSITE"]))
+
+(def abstract-and-status
+  (list))
+
+(def table-of-contents
+
+      ;; Table of contents html follows
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      ;; Table of Contents
+      ;; 
+      ;; <a href="#section-1">1</a>
+      ;; . Introduction ....................................................
+      ;; <a href="#page-6">6</a>
+      ;; <a href="#section-1.1">1.1</a>
+      ;; . Conformance and Error Handling .............................
+      ;; <a href="#page-6">6</a>
+      ;; <a href="#section-1.2">1.2</a>
+      ;; . Syntax Notation ............................................
+      ;; <a href="#page-6">6</a>
+      ;; <a href="#section-2">2</a>
+      ;; . Resources .......................................................
+      ;; <a href="#page-7">7</a>
+      ;; <a href="#section-3">3</a>
+      ;; . Representations .................................................
+      ;; <a href="#page-7">7</a>
+      ;; <a href="#section-3.1">3.1</a>
+      ;; . Representation Metadata ....................................
+      ;; <a href="#page-8">8</a>
+      ;; <a href="#section-3.1.1">3.1.1</a>
+      ;; . Processing Representation Data ......................
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  (list))
+
+(defn page-header [link-url link-text title]
+  (let [content-length (count (str link-text title month-and-year))
+        total-spacing  (- max-width content-length)
+        left-spacing   (int (/ total-spacing 2))
+        right-spacing  (- total-spacing left-spacing)]
+
+    (list
+     [:span {:id "page-2"}]
+     "\n"
+     [:span {:class "grey"}
+      [:a {:href link-url} link-text]
+      (spaces left-spacing)
+      title
+      (spaces right-spacing)
+      month-and-year])))
+
+;; TODO: Make is so that each of these formatting functions return an object
+;; that tracks how many lines long they are when rendered as text (ignoring html
+;; tags). Might even need a protocol that lets them split themselves across a
+;; page break. That splitting function should return content for before the
+;; break and after. We should not assume that the before and after content will
+;; have the same length as the original content, something like a multi line
+;; heading might refuse to split the heading and instead emit padding to the
+;; previous page and start the heading on a new page.
+;;
+;; Renderer can track which page each of the headings ends up on and
+;; automatically report back to the table of contents function.
+;;
+;; All of this is in aid of being able to add new content without having to
+;; manually reformat things into pages and update the TOC.
+(def content
+  [:pre
+   (left-and-right "Public Communication Working Group" "L Campbell")
+   (left-and-right "Request For Comments: 0" "Curtin and Monash")
+   (left-and-right "STD: 42" month-and-year)
+   (title "PERSONAL RESUME (REVISION 3)")
+   (heading "Status of this Memo")
+   (paragraph
+    "This RFC specifies an IAB standards track protocol for the Internet
+       community, and requests discussion and suggestions for improvements.
+       Please refer to the current edition of the \"IAB Official Protocol
+       Standards\" for the standardization state and status of this protocol.
+       Distribution of this memo is unlimited.")
+   (heading "Summary")
+   (paragraph
+    "TFTP is a very simple protocol used to transfer files. It is from this
+        that its name comes, Trivial File Transfer Protocol or TFTP. Each
+        nonterminal packet is acknowledged separately. This document describes
+        the protocol and its types of packets. The document also explains the
+        reasons behind some of the design decisions.")
+   (heading "Acknowlegements")
+   (paragraph
+    "The protocol was originally designed by Noel Chiappa, and was
+        redesigned by him, Bob Baldwin and Dave Clark, with comments from Steve
+        Szymanski. The current revision of the document includes modifications
+        stemming from discussions with and suggestions from Larry Allen, Noel
+        Chiappa, Dave Clark, Geoff Cooper, Mike Greenwald, Liza Martin, David
+        Reed, Craig Milo Rogers (of USC-ISI), Kathy Yellick, and the author. The
+        acknowledgement and retransmission scheme was inspired by TCP, and the
+        error mechanism was suggested by PARC's EFTP abort message.")
+
+
+
+   [:span {:class "grey"} (left-and-right "Campbell" "[Page 1]")]
+   [:hr]
+   [:pre {:class "newpage"}
+    (page-header self-url "RFC 1350" "TFTP Revision 2")]
+
+   ;; <span class="grey">Sollins                                                         [Page 1]</span></pre>
+   ;; <hr/><!--NewPage--><pre class='newpage'><span id="page-2" ></span>
+   ;; <span class="grey"><a href="./rfc1350">RFC 1350</a>                    TFTP Revision 2                    July 1992</span>
+
+   ])
+
+(def pages
   (c/html
    (list
     (p/doctype :xhtml-transitional)
@@ -62,39 +200,14 @@
       [:style {:type "text/css"}
        (slurp "src/styles.css")]]
      [:body
-      [:pre
-       (left-and-right "Network Working Group" "K. Sollins")
-       (left-and-right "Request For Comments: 1350" "MIT")
-       (left-and-right "STD: 33" "July 1992")
-       (title "THE TFTP PROTOCOL (REVISION 2)")
-       (heading "Status of this Memo")
-       (paragraph
-        "This RFC specifies an IAB standards track protocol for the Internet
-       community, and requests discussion and suggestions for improvements.
-       Please refer to the current edition of the \"IAB Official Protocol
-       Standards\" for the standardization state and status of this protocol.
-       Distribution of this memo is unlimited.")
-       (heading "Summary")
-       (paragraph
-        "TFTP is a very simple protocol used to transfer files. It is from this
-        that its name comes, Trivial File Transfer Protocol or TFTP. Each
-        nonterminal packet is acknowledged separately. This document describes
-        the protocol and its types of packets. The document also explains the
-        reasons behind some of the design decisions.")
-       (heading "Acknowlegements")
-       (paragraph
-        "The protocol was originally designed by Noel Chiappa, and was
-        redesigned by him, Bob Baldwin and Dave Clark, with comments from Steve
-        Szymanski. The current revision of the document includes modifications
-        stemming from discussions with and suggestions from Larry Allen, Noel
-        Chiappa, Dave Clark, Geoff Cooper, Mike Greenwald, Liza Martin, David
-        Reed, Craig Milo Rogers (of USC-ISI), Kathy Yellick, and the author. The
-        acknowledgement and retransmission scheme was inspired by TCP, and the
-        error mechanism was suggested by PARC's EFTP abort message.")]]))))
+      header
+      abstract-and-status
+      table-of-contents
+      content]))))
 
 ;; Output
 
 (defn render-and-write [path]
-  (spit path (foo)))
+  (spit path pages))
 
 (render-and-write "docs/output.html")
