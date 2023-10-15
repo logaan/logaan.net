@@ -183,10 +183,6 @@
    [:pre {:class "newpage"}
     (page-header self-url "RFC 1350" "TFTP Revision 2")]
 
-   ;; <span class="grey">Sollins                                                         [Page 1]</span></pre>
-   ;; <hr/><!--NewPage--><pre class='newpage'><span id="page-2" ></span>
-   ;; <span class="grey"><a href="./rfc1350">RFC 1350</a>                    TFTP Revision 2                    July 1992</span>
-
    ])
 
 (def pages
@@ -207,7 +203,4 @@
 
 ;; Output
 
-(defn render-and-write [path]
-  (spit path pages))
-
-(render-and-write "docs/output.html")
+(spit "docs/output.html" pages)
