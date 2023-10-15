@@ -78,6 +78,9 @@
     "|" [:a {:href  "https://flickr.com/photos/colinlogan"} "Flickr"]
     "] "
 
+    "[" [:a {:href "https://www.linkedin.com/in/logan-campbell-6623ab55/"} "Linkedin"]
+    "]"
+
     ;; TODO: Should grow with max width
     (spaces 22)]
 
