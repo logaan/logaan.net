@@ -150,7 +150,7 @@
    (left-and-right "Public Communication Working Group" "L Campbell")
    (left-and-right "Request For Comments: 0" "Curtin and Monash")
    (left-and-right "STD: 42" month-and-year)
-   (title "PERSONAL RESUME (REVISION 3)")
+   (title "PERSONAL WEBSITE OF LOGAN CAMPBELL (REVISION 2)")
    (heading "Status of this Memo")
    (paragraph
     "This RFC specifies an IAB standards track protocol for the Internet
@@ -204,3 +204,65 @@
 ;; Output
 
 (spit "docs/output.html" pages)
+
+;;;
+;; 2 blank lines between heading span and start of content
+;; 48 lines of content
+;; 3 blank lines before footer
+;;;
+;; <span class="grey"><a href="./rfc1350">RFC 1350</a>                    TFTP Revision 2                    July 1992</span>
+;; 
+;; 
+;;    so it may be used to move files between machines on different
+;;    networks implementing UDP.  (This should not exclude the possibility
+;;    of implementing TFTP on top of other datagram protocols.)  It is
+;;    designed to be small and easy to implement.  Therefore, it lacks most
+;;    of the features of a regular FTP.  The only thing it can do is read
+;;    and write files (or mail) from/to a remote server.  It cannot list
+;;    directories, and currently has no provisions for user authentication.
+;;    In common with other Internet protocols, it passes 8 bit bytes of
+;;    data.
+;; 
+;;    Three modes of transfer are currently supported: netascii (This is
+;;    ascii as defined in "USA Standard Code for Information Interchange"
+;;    [<a href="#ref-1">1</a>] with the modifications specified in "Telnet Protocol
+;;    Specification" [<a href="#ref-3" title="&quot;Telnet Protocol Specification,&quot;">3</a>].)  Note that it is 8 bit ascii.  The term
+;;    "netascii" will be used throughout this document to mean this
+;;    particular version of ascii.); octet (This replaces the "binary" mode
+;;    of previous versions of this document.) raw 8 bit bytes; mail,
+;;    netascii characters sent to a user rather than a file.  (The mail
+;;    mode is obsolete and should not be implemented or used.)  Additional
+;;    modes can be defined by pairs of cooperating hosts.
+;; 
+;;    Reference [<a href="#ref-4" title="&quot;Requirements for Internet Hosts -- Application and Support&quot;">4</a>] (<a href="#section-4.2">section 4.2</a>) should be consulted for further valuable
+;;    directives and suggestions on TFTP.
+;; 
+;; <span class="h2"><a class="selflink" id="section-2" href="#section-2">2</a>. Overview of the Protocol</span>
+;; 
+;;    Any transfer begins with a request to read or write a file, which
+;;    also serves to request a connection.  If the server grants the
+;;    request, the connection is opened and the file is sent in fixed
+;;    length blocks of 512 bytes.  Each data packet contains one block of
+;;    data, and must be acknowledged by an acknowledgment packet before the
+;;    next packet can be sent.  A data packet of less than 512 bytes
+;;    signals termination of a transfer.  If a packet gets lost in the
+;;    network, the intended recipient will timeout and may retransmit his
+;;    last packet (which may be data or an acknowledgment), thus causing
+;;    the sender of the lost packet to retransmit that lost packet.  The
+;;    sender has to keep just one packet on hand for retransmission, since
+;;    the lock step acknowledgment guarantees that all older packets have
+;;    been received.  Notice that both machines involved in a transfer are
+;;    considered senders and receivers.  One sends data and receives
+;;    acknowledgments, the other sends acknowledgments and receives data.
+;; 
+;;    Most errors cause termination of the connection.  An error is
+;;    signalled by sending an error packet.  This packet is not
+;;    acknowledged, and not retransmitted (i.e., a TFTP server or user may
+;;    terminate after sending an error message), so the other end of the
+;;    connection may not get it.  Therefore timeouts are used to detect
+;;    such a termination when the error packet has been lost.  Errors are
+;; 
+;; 
+;; 
+;; <span class="grey">Sollins                                                         [Page 2]</span></pre>
+;;;
