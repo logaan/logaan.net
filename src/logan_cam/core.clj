@@ -236,8 +236,8 @@
    (bullets
     "Physical fault detection model from smart meter readings, API and UI
    for fault analysis and remedy tracking, Power network simulation, and
-   Data processing pipeline for Powercor (Python, Clojure, ClojureScript,
-   React)"
+   Data processing pipeline for Powercor (Python, Clojure, React,
+   ClojureScript)"
     "Training, architecture proposals, and prototyping for Aus Post
    (Clojure)"
     "Record management interface embedded in a medical device for
@@ -395,7 +395,7 @@
 
 ;; Output
 
-(spit "docs/output.html" pages)
+(spit "docs/index.html" pages)
 
 ;;;
 ;; 1 line of header
