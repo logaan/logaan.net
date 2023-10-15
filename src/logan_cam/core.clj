@@ -96,3 +96,5 @@
 
 (defn render-and-write [path]
   (spit path (foo)))
+
+(render-and-write "docs/output.html")

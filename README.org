@@ -1,0 +1,13 @@
+* logaan.net
+
+** Development
+
+*** Spacemacs
+
+To start a repl type ~,'~ and then select ~cider-jack-in-clj~.
+
+Open ~core.clj~ and run ~,sb~ to evaluate the buffer.
+
+Then ~,sa~ to open the buffer in the core namespace.
+
+~[space]gs~ to bring up git.
