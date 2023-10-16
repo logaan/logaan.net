@@ -82,7 +82,7 @@
     "]"
 
     ;; TODO: Should grow with max width
-    (spaces 22)]
+    (spaces 12)]
 
    [:br]
    [:span {:class "pre docinfo"}
